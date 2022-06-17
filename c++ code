@@ -1,0 +1,53 @@
+
+//link ===>   https://www.youtube.com/watch?v=zhsjU1Bh9jQ
+
+//we push perenthesis with index number if for any s[i]==')' && st.top()=='('  then we remove that index from stack 
+//left index is invalid but between them their are valid perenthesis so we find the max gap between invalid index
+//one more condition that you can also find gap between size of string and last invalid index because their may be a possible solution
+//also consider 0 to first invalid index 
+
+
+
+class Solution{
+public:
+
+    int maxLength(string s){
+  
+   int n=s.size();  
+   
+   if(s[0]==' ' || n==0)return 0;
+   
+ stack<int>st;
+ 
+ for(int i=0;i<n;i++){
+   
+  if(!st.empty() && s[i]==')' && s[st.top()]=='(')
+    st.pop();
+    
+  else st.push(i);
+   
+ }
+
+int res=0;
+int index=-1;
+
+vector<int>v;
+while(!st.empty()){
+    v.push_back(st.top());
+    st.pop();
+}
+
+reverse(v.begin(),v.end());
+
+for(int i=0;i<v.size();i++){
+    res=max(res,v[i]-index-1);
+    index=v[i];
+}
+
+
+res=max(res,n-1-index);
+
+return res;     
+       
+    }
+};
